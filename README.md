@@ -6,7 +6,7 @@ As a longstanding Slayer fan and relative newcomer to Python, I've had great fun
 
 Instructions
 ------------
-Copy the code, then navigate to where the file lives and then "python random_slayer_album.py"
+Copy the code, navigate to directory where the file lives, then execute "python random_slayer_album.py" in terminal/command window.
 
 
 Notes & Caveats
