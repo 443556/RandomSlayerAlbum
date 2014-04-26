@@ -1,5 +1,5 @@
 Random Slayer Album
-=================
+===================
 
 As a longstanding Slayer fan and relative newcomer to Python, I've had great fun writing some code that generates a randomised Slayer album.
 
@@ -22,4 +22,4 @@ Some of the scraped words are poorly punctuated/spelt, aren't even words etc...
 
 'Haunting the Chapel' (1984) is not included due to it being an EP and not a full LP.
 
-This is just a simple fun, program; absolutely no disrespect or copyright infringement is intended.
+This is just a simple, fun, program; absolutely no disrespect or copyright infringement is intended.
