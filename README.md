@@ -1,4 +1,4 @@
-RandomSlayerAlbum
+Random Slayer Album
 =================
 
 As a longstanding Slayer fan and relative newcomer to Python, I've had great fun writing some code that generates a randomised Slayer album.
