@@ -85,6 +85,8 @@ class RandomSlayerAlbum:
               words = words.text.upper()
 
               no_words_in_track = 0
+              illegal_tokens = ["MOC", "DOM", "LIC", "SPEA", "AWA", "LEAD:", "HANNEMAN", "KANNEMAN", "KING", "ARAYA", "/", " / "]
+
               for W in words.split():
                   W = W.replace("\n", " ")
                   W = W.replace(",", "")
@@ -92,16 +94,10 @@ class RandomSlayerAlbum:
                   W = W.replace("!", "")
                   W = W.replace("?", "")
                   W = W.replace(";", "")
-                  W = W.replace("/", "")
-                  W = W.replace("'", "")
                   W = W.replace('"', '')
                   W = W.replace("-", "")
-                  W = W.replace("LEAD:", "")
-                  W = W.replace("HANNEMAN", "")
-                  W = W.replace("KANNEMAN", "")
-                  W = W.replace("KING", "")
-                  W = W.replace("ARAYA", "")
-                  if not "[" in W and not "]" in W and not "(" in W and not ")" in W:
+
+                  if not "[" in W and not "]" in W and not "(" in W and not ")" in W and not W in illegal_tokens:
                      all_track_words.append(W)
                      no_words_in_track += 1
               no_words_in_tracks.append(no_words_in_track)
@@ -229,7 +225,7 @@ class RandomSlayerAlbum:
           tokens_in_tracks = ""
 
           for k in range(album_title_tokens):
-              album_title += unique_words[random.randint(0, len(unique_words))] + " "
+              album_title += unique_words[random.randint(0, (len(unique_words) - 1))] + " "
               album_title = "".join(album_title.split("\n"))
 
           for x in range(no_tracks_on_album):
@@ -241,7 +237,7 @@ class RandomSlayerAlbum:
           for TITT in tokens_in_track_titles:
               track_title = ""
               for x in range(TITT):
-                  track_title += unique_words[random.randint(0, len(unique_words))]
+                  track_title += unique_words[random.randint(0, (len(unique_words) - 1))]
               track_title = " ".join(track_title.split())
               track_titles.append(track_title)
 
