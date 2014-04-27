@@ -162,7 +162,7 @@ class RandomSlayerAlbum:
           most_common_words = []
           most_common_words = self.lexical_analysis(ALBUM_NAMES_TRACK_TITLES_PLUS_UNIQUE_WORDS, ALL_WORDS)
 
-          stats_list.append("\nThe 100 most frequently occuring words are: \n")
+          stats_list.append("\nThe 100 most frequently occurring words are: \n")
           for index, MCW in enumerate(most_common_words):
               item = str((index + 1))+". " + MCW
               stats_list.append(item + "\n")
