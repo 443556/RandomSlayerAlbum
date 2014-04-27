@@ -141,25 +141,34 @@ class RandomSlayerAlbum:
           fewest_no_tracks = min(album_track_counts)
           greatest_no_tracks = max(album_track_counts)
 
-          stats_string = ""
+          stats_list = []
 
-          stats_string += "Assessed "+str(len(album_URL_list))+" full-length Slayer releases\n"
-          stats_string += "Least no. of words in a Slayer album title: 2\n"
-          stats_string += "Greatest no. of words in a Slayer album title: 4\n"
-          stats_string += "Average no. of words in a Slayer album title: 3\n"
+          stats_list.append("Assessed "+str(len(album_URL_list))+" full-length Slayer releases\n")
+          stats_list.append("Least no. of words in a Slayer album title: 2\n")
+          stats_list.append("Greatest no. of words in a Slayer album title: 4\n")
+          stats_list.append("Average no. of words in a Slayer album title: 3\n")
 
-          stats_string += "Least no of tracks on a Slayer album: "+str(fewest_no_tracks)+"\n"
-          stats_string += "Greatest no of tracks on a Slayer album: "+str(greatest_no_tracks)+"\n"
-          stats_string += "Average no of tracks on a Slayer album: "+str(sum(album_track_counts)/len(album_track_counts))+"\n"
+          stats_list.append("Least no of tracks on a Slayer album: "+str(fewest_no_tracks)+"\n")
+          stats_list.append("Greatest no of tracks on a Slayer album: "+str(greatest_no_tracks)+"\n")
+          stats_list.append("Average no of tracks on a Slayer album: "+str(sum(album_track_counts)/len(album_track_counts))+"\n")
 
-          stats_string += "Assessed "+str(len(all_track_titles))+" tracks from "+str(len(album_URL_list))+" full-length Slayer releases\n"
-          stats_string += "No. of unique words (including some plural and possesive forms) in all tracks: "+str(UTW_count)+"\n"
-          stats_string += "No. of all words (including repeats, choruses etc) in all tracks, track titles and album titles: "+str(len(ALL_WORDS))+"\n"
-          stats_string += "Least no. of words in a Slayer track: "+str(min(no_words_in_tracks))+"\n"
-          stats_string += "Greatest no. of words in a Slayer track: "+str(max(no_words_in_tracks))+"\n"
-          stats_string += "Average no. of words in a Slayer track is: "+str(sum(no_words_in_tracks)/len(no_words_in_tracks))
+          stats_list.append("Assessed "+str(len(all_track_titles))+" tracks from "+str(len(album_URL_list))+" full-length Slayer releases\n")
+          stats_list.append("No. of unique words (including some plural and possesive forms) in all tracks: "+str(UTW_count)+"\n")
+          stats_list.append("No. of all words (including repeats, choruses etc) in all tracks, track titles and album titles: "+str(len(ALL_WORDS))+"\n")
+          stats_list.append("Least no. of words in a Slayer track: "+str(min(no_words_in_tracks))+"\n")
+          stats_list.append("Greatest no. of words in a Slayer track: "+str(max(no_words_in_tracks))+"\n")
+          stats_list.append("Average no. of words in a Slayer track is: "+str(sum(no_words_in_tracks)/len(no_words_in_tracks))+"\n\n")
 
-          stats.write(stats_string)
+          most_common_words = []
+          most_common_words = self.lexical_analysis(ALBUM_NAMES_TRACK_TITLES_PLUS_UNIQUE_WORDS, ALL_WORDS)
+
+          stats_list.append("\nThe 100 most frequently occuring words are: \n")
+          for index, MCW in enumerate(most_common_words):
+              item = str((index + 1))+". " + MCW
+              stats_list.append(item + "\n")
+
+          for SL in stats_list:
+              stats.write(SL)
 
           required_data.write("FEWEST_NO_TRACKS " + str(fewest_no_tracks) + "\n")
           required_data.write("GREATEST_NO_TRACKS " + str(greatest_no_tracks) + "\n")
@@ -185,8 +194,6 @@ class RandomSlayerAlbum:
 
 
       def generate_randomised_album(self):
-
-          self.print_stats()
 
           required_data_file = self.data_dir+"/required_data.txt"
           open_required_data = open(required_data_file, "r")
@@ -217,6 +224,8 @@ class RandomSlayerAlbum:
 
           for OAD in open_all_data:
               all_words.append(OAD)
+
+          self.lexical_analysis(unique_words, all_words)
 
           album_title_tokens = random.randint(2, 4)
           no_tracks_on_album = random.randint(small_tracks, large_tracks)
@@ -286,6 +295,8 @@ class RandomSlayerAlbum:
           orig_dir = "../"
           os.chdir(orig_dir)
 
+          self.print_stats()
+
           print "Your new randomly generated Slayer album is called: ", album_title, "\n"
           print "You will find a text file ["+album_file_name+".txt] in the '/"+self.data_dir+"' folder in your current directory, which is: " + os.getcwd() + "\n"
           print "There are " + str(no_tracks_on_album) + " tracks on this album\n"
@@ -307,11 +318,49 @@ class RandomSlayerAlbum:
           open_stats_data = open(stats_data_file, "r")
 
           for OSD in open_stats_data:
+              OSD = OSD.rstrip('\n')
               print OSD
 
           open_stats_data.close()
 
           print
+
+
+      def lexical_analysis(self, unique_list, all_list):
+
+          UL = unique_list
+          UL.sort()
+          AL = all_list
+          AL.sort()
+          count = 0
+
+          instances = []
+          intance_count = []
+
+          for UL in unique_list:
+              count = 0
+              for AL in all_list:
+                  if UL == AL:
+                     count += 1
+              if count > 1:
+                 instances.append([UL, count])
+
+          instance_count = sorted(instances, key=lambda instance: instance[1])
+
+          top_100 = []
+          string = ""
+
+          for IC in instance_count:
+                    string = ""
+                    string += (IC[0]+" occurs ")
+                    string += (str(IC[1])+" times")
+                    string = "".join(string).replace("\n", "")
+                    if not string in top_100:
+                       top_100.append(string)
+
+          top_100 = top_100[-100:]
+
+          return top_100
 
 
 if __name__ == '__main__':
