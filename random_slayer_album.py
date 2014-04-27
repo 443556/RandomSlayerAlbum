@@ -225,8 +225,6 @@ class RandomSlayerAlbum:
           for OAD in open_all_data:
               all_words.append(OAD)
 
-          self.lexical_analysis(unique_words, all_words)
-
           album_title_tokens = random.randint(2, 4)
           no_tracks_on_album = random.randint(small_tracks, large_tracks)
           album_title = ""
