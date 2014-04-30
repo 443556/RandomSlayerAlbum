@@ -96,8 +96,10 @@ class RandomSlayerAlbum:
                   W = W.replace(";", "")
                   W = W.replace('"', '')
                   W = W.replace("-", "")
+                  W = W.replace("/", "")
+                  W = W.replace(".", "")
 
-                  if not "[" in W and not "]" in W and not "(" in W and not ")" in W and not W in illegal_tokens:
+                  if not "[" in W and not "]" in W and not "(" in W and not ")" in W and not W in illegal_tokens and W != "":
                      all_track_words.append(W)
                      no_words_in_track += 1
               no_words_in_tracks.append(no_words_in_track)
@@ -162,7 +164,7 @@ class RandomSlayerAlbum:
           most_common_words = []
           most_common_words = self.lexical_analysis(ALBUM_NAMES_TRACK_TITLES_PLUS_UNIQUE_WORDS, ALL_WORDS)
 
-          stats_list.append("\nThe 100 most frequently occurring words are: \n")
+          stats_list.append("\nThe 100 most frequently occuring words are: \n")
           for index, MCW in enumerate(most_common_words):
               item = str((index + 1))+". " + MCW
               stats_list.append(item + "\n")
@@ -363,3 +365,7 @@ class RandomSlayerAlbum:
 
 if __name__ == '__main__':
    RandomSlayerAlbum()
+
+
+
+
