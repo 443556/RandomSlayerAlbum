@@ -229,24 +229,29 @@ class RandomSlayerAlbum:
 
           album_title_tokens = random.randint(2, 4)
           no_tracks_on_album = random.randint(small_tracks, large_tracks)
+          album_title_token = ""
           album_title = ""
           tokens_in_track_titles = []
           tokens_in_tracks = ""
 
           for k in range(album_title_tokens):
-              album_title += unique_words[random.randint(0, (len(unique_words) - 1))] + " "
+              album_title_token = unique_words[random.randint(0, (len(unique_words) - 1))]
+              if not album_title_token in album_title:
+                 album_title += album_title_token + " "
               album_title = "".join(album_title.split("\n"))
 
           for x in range(no_tracks_on_album):
               tokens_in_track_titles.append(random.randint(1, 5))
 
-          track_titles_and_their_lyrics = {}
           album_lyrics = []
+          track_title_token = ""
 
           for TITT in tokens_in_track_titles:
               track_title = ""
               for x in range(TITT):
-                  track_title += unique_words[random.randint(0, (len(unique_words) - 1))]
+                  track_title_token = unique_words[random.randint(0, (len(unique_words) - 1))]
+                  if not track_title_token in track_title:
+                     track_title += track_title_token
               track_title = " ".join(track_title.split())
               track_titles.append(track_title)
 
@@ -365,7 +370,3 @@ class RandomSlayerAlbum:
 
 if __name__ == '__main__':
    RandomSlayerAlbum()
-
-
-
-
