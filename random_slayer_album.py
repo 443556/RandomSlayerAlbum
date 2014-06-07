@@ -97,6 +97,7 @@ class RandomSlayerAlbum:
                   W = W.replace('"', '')
                   W = W.replace("-", "")
                   W = W.replace("/", "")
+                  W = W.replace(" / ", "")
                   W = W.replace(".", "")
 
                   if not "[" in W and not "]" in W and not "(" in W and not ")" in W and not W in illegal_tokens and W != "":
@@ -265,7 +266,10 @@ class RandomSlayerAlbum:
           for index, TT in enumerate(track_titles):
               track_lyrics = ""
               print_title = str((index + 1))+". "+TT
-              random_slayer_album.write("\n\n\n" + print_title)
+              if index == 0:
+                 random_slayer_album.write(print_title)
+              else:
+                 random_slayer_album.write("\n\n\n" + print_title)
 
               divider = "\n"
               for z in range(len(print_title)):
@@ -284,9 +288,8 @@ class RandomSlayerAlbum:
               string = ""
 
               for item in track_lyrics.split():
-                  word_count += 1
 
-                  if word_count % 5 == 0:
+                  if word_count > 0 and word_count % 5 == 0:
                      line_count += 1
                      string += "\n"
 
@@ -294,6 +297,7 @@ class RandomSlayerAlbum:
                         string += "\n"
 
                   string += item + " "
+                  word_count += 1
 
               random_slayer_album.write(string)
 
