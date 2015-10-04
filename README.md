@@ -15,7 +15,7 @@ This program is heavily dependent on a BeautifulSoup webscrape. The necessary sc
 
 **NOTE 04 OCT 2015**
 
-The URL which this script obtained data is no longer reachable.
+The URL which this script obtained data from is no longer reachable.
 A fix will be implemented in due course.
 
 **END NOTE**
