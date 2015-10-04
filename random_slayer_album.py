@@ -1,12 +1,13 @@
-import sys
-import time
+import base64
 import datetime
 import os
-import urllib2
-import base64
 import random
+import sys
+import time
+import urllib2
 
 from bs4 import BeautifulSoup
+import requests
 
 class RandomSlayerAlbum:
 
@@ -15,6 +16,21 @@ class RandomSlayerAlbum:
 
 
       def intro(self):
+	  
+	  self.data_url = "http://www.releaselyrics.com/1807/slayer-evil-has-no-boundaries/"
+
+	  try:
+    		req = requests.get(self.data_url)
+	  except requests.exceptions.RequestException, e: 
+    	  	print "Exception: {0}".format(str(e))
+		print 
+		print "ERROR"
+		print "If you are seeing this, there has likely been an 'ERR_NAME_NOT_RESOLVED',"
+		print "'Server not found' or 'Network Error' with the URL from which this script" 
+		print "obtains data. The script's author is aware of this and will rectify it at" 
+		print "a later date."
+		print
+    		sys.exit(0)
 
           self.data_dir = "RandomSlayerAlbum"
           if not os.path.exists(self.data_dir):
@@ -24,13 +40,14 @@ class RandomSlayerAlbum:
              self.get_data()
           else:
              self.generate_randomised_album()
+        
+          self.get_data()		 
 
 
       def get_data(self):
-
           data_start = time.time()
-
-          base_URL = urllib2.Request("http://www.releaselyrics.com/1807/slayer-evil-has-no-boundaries/")
+		
+          base_URL = urllib2.Request(self.data_url)
           target = urllib2.urlopen(base_URL)
           base_soup = BeautifulSoup(target)
           release_URLs = base_soup.find_all("a", class_="release-plain")
