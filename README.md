@@ -11,8 +11,15 @@ Copy the code, navigate to directory where the file lives, then execute "python 
 
 Notes & Caveats
 ---------------
-This program is heavily dependent on a BeautifulSoup webscrape. The necessary scrape will be conducted the first time the program is executed;
-this will take in the region of 60-90 seconds. Subsequent executions will be much quicker.
+This program is heavily dependent on a BeautifulSoup webscrape. The necessary scrape will be conducted the first time the program is executed; this will take in the region of 60-90 seconds. Subsequent executions will be much quicker.
+
+**NOTE 04 OCT 2015**
+
+The URL which this script obtained data is no longer reachable.
+A fix will be implemented in due course.
+
+**END NOTE**
+
 
 The randomly generated material will for the most part be nonsense, but will also be very funny by times.
 
