@@ -1,0 +1,13 @@
+Assessed 10 full-length Slayer releases
+Least no. of words in a Slayer album title: 2
+Greatest no. of words in a Slayer album title: 4
+Average no. of words in a Slayer album title: 3
+Least no of tracks on a Slayer album: 7
+Greatest no of tracks on a Slayer album: 13
+Average no of tracks on a Slayer album: 10
+Assessed 102 tracks from 10 full-length Slayer releases
+No. of unique words (including some plural and possesive forms) in all tracks: 3446
+No. of all words (including repeats, choruses etc) in all tracks, track titles and album titles: 20373
+Least no. of words in a Slayer track: 79
+Greatest no. of words in a Slayer track: 402
+Average no. of words in a Slayer track is: 197

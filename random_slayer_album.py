@@ -2,6 +2,7 @@ import base64
 import datetime
 import os
 import random
+import shutil
 import sys
 import time
 import urllib2
@@ -21,27 +22,29 @@ class RandomSlayerAlbum:
 
 	  try:
     		req = requests.get(self.data_url)
-	  except requests.exceptions.RequestException, e: 
-    	  	print "Exception: {0}".format(str(e))
-		print 
+		assert(req.status_code == 200)
+	  except Exception as e: 
 		print "ERROR"
-		print "If you are seeing this, there has likely been an 'ERR_NAME_NOT_RESOLVED',"
-		print "'Server not found' or 'Network Error' with the URL from which this script" 
-		print "obtains data. The script's author is aware of this and will rectify it at" 
-		print "a later date."
-		print
-    		sys.exit(0)
+		print "If you are seeing this, there has likely been one of the following:" 
+		print "404"
+		print "'ERR_NAME_NOT_RESOLVED',"
+		print "'Server not found' or" 
+		print "'Network Error'"
+		print "...with the URL from which this script obtains data."
+		print "Therefore the webscrape cannot execute."
+		print "NIL DESPERANDUM!"
+		print "The data has been preserved when the scrape URL was extant."
+		print "It lives in the /data/ folder of this repo."
+		print "The webscrape code remains in-situ for posterity; refer to the 'get_data()' function. It is not called in this version of the script."
+		print "Refer to previous version of this script for orig version of this here 'intro' function."
 
-          self.data_dir = "RandomSlayerAlbum"
-          if not os.path.exists(self.data_dir):
-             os.makedirs(self.data_dir)
-             print "Collecting data, please wait..."
-             os.chdir(self.data_dir)
-             self.get_data()
-          else:
-             self.generate_randomised_album()
-        
-          self.get_data()		 
+          self.data_dir = "data"
+	  self.albums_dir = "albums/"
+
+          if not os.path.exists(self.albums_dir):
+             os.makedirs(self.albums_dir)
+          
+	  self.generate_randomised_album()
 
 
       def get_data(self):
@@ -273,10 +276,12 @@ class RandomSlayerAlbum:
               track_title = " ".join(track_title.split())
               track_titles.append(track_title)
 
-          os.chdir(self.data_dir)
+          os.chdir(self.albums_dir)
           album_file_name = album_title
+	  test = album_file_name
           album_file_name = album_file_name.replace(" ", "_")
           album_file_name = album_file_name[:-1]
+	  
 
           random_slayer_album =  open(album_file_name+".txt", "w+")
 
@@ -320,20 +325,36 @@ class RandomSlayerAlbum:
 
           orig_dir = "../"
           os.chdir(orig_dir)
+          
+	  #Sorry folks, this was necessary until the data files were converted from DOS to UNIX. 
+	  #Leaving it in anyway.
+          album_name_for_terminal = ""
+	  album_filename_for_terminal = ""
+	  album_filename_for_terminal = str(random_slayer_album).split(".txt")[0][12:]
+          album_filename_for_terminal = album_filename_for_terminal.replace("\\r", "")+".txt"
+	  album_name_for_terminal = album_filename_for_terminal.replace("_", " ")[:-4] 
+	
+	  print	
+          print "Your new randomly-generated Slayer album is called: "+album_name_for_terminal
+          print "You will find a text file ["+album_filename_for_terminal+"] in the '/"+self.albums_dir+"' folder of the current directory."
 
-          self.print_stats()
-
-          print "Your new randomly generated Slayer album is called: ", album_title, "\n"
-          print "You will find a text file ["+album_file_name+".txt] in the '/"+self.data_dir+"' folder in your current directory, which is: " + os.getcwd() + "\n"
           print "There are " + str(no_tracks_on_album) + " tracks on this album\n"
           print "The tracks are: \n"
           for index, TT in enumerate(track_titles):
               print_title = str((index + 1))+". "+TT
               print print_title
 
+	  lex_list = self.lexical_analysis(unique_words, all_words)	  
+	  self.print_stats()
+	  
+	  print "The 100 most frequent words in SLAYER's lyrics are:"
+	  for index, item in enumerate(lex_list):	
+		print item	
+
           open_required_data.close()
           open_unique_data.close()
           open_all_data.close()
+	  random_slayer_album.close()
 
 
       def print_stats(self):
@@ -374,13 +395,15 @@ class RandomSlayerAlbum:
           instance_count = sorted(instances, key=lambda instance: instance[1])
 
           top_100 = []
-          string = ""
+          word = ""
+	  occurrences = ""
+	  string = ""
 
-          for IC in instance_count:
-                    string = ""
-                    string += (IC[0]+" occurs ")
-                    string += (str(IC[1])+" times")
-                    string = "".join(string).replace("\n", "")
+          for IC in instance_count:	
+                    string = ""	
+		    word = IC[0].replace("\n", "")
+		    occurrences = str(IC[1])
+		    string = "'" + word + "' occurs " + occurrences + " times"
                     if not string in top_100:
                        top_100.append(string)
 
